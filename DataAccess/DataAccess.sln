@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetDataAccess", "DotNetD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{17561985-8224-40B7-AA41-4341C3EC70FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCore.MongoDB.API", "DotNetCore.MongoDB.API\DotNetCore.MongoDB.API.csproj", "{B6F899D6-A0C5-470E-88D0-904FB29A82F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{17561985-8224-40B7-AA41-4341C3EC70FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17561985-8224-40B7-AA41-4341C3EC70FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17561985-8224-40B7-AA41-4341C3EC70FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6F899D6-A0C5-470E-88D0-904FB29A82F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6F899D6-A0C5-470E-88D0-904FB29A82F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6F899D6-A0C5-470E-88D0-904FB29A82F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6F899D6-A0C5-470E-88D0-904FB29A82F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
