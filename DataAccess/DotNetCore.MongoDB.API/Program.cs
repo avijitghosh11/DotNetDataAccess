@@ -15,6 +15,7 @@ builder.Services.AddSingleton<IMongoClient>(cl =>
     new MongoClient(builder.Configuration.GetValue<string>("AppDatabaseSettings:ConnectionString"))
     );
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

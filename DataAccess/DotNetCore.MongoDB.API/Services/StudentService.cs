@@ -12,7 +12,6 @@ namespace DotNetCore.MongoDB.API.Services
         {
             var database = client.GetDatabase(settings.DatabaseName);
             _studentCollection = database.GetCollection<Student>(settings.StudentCollection);
-                //.WithWriteConcern(WriteConcern.WMajority);
         }
         public Student CreateStudent(Student student)
         {

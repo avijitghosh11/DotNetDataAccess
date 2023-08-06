@@ -5,5 +5,6 @@
         string DatabaseName { get; set; }
         string ConnectionString { get; set; }
         string StudentCollection { get; set; }
+        string TeacherCollection { get; set; }
     }
 }
