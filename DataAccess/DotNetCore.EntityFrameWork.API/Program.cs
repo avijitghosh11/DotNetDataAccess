@@ -1,6 +1,17 @@
+using DotNetCore.EntityFrameWork.API.DatabaseContext;
+using DotNetCore.EntityFrameWork.API.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContextPool<AppDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationConnection"))
+);
+
+builder.Services.AddScoped<IStudentService, StudentService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
