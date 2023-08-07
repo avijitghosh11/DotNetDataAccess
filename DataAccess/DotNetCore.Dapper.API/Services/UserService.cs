@@ -1,52 +1,18 @@
-﻿using DAL.Models;
-using Dapper;
-using Microsoft.Data.SqlClient;
+﻿using DotNetCore.Dapper.API.Models;
 using System.Data;
+using Microsoft.Data.SqlClient;
+using Dapper;
 
-namespace DAL
+namespace DotNetCore.Dapper.API.Services
 {
-    public class DapperDotNet : IDal
+    public class UserService : IUserService
     {
-        public List<User> GetAllUsers(string connString)
+        private readonly string connString;
+        public UserService(IConfiguration configuration)
         {
-            List<User> users = new List<User>();
-            using (SqlConnection con = new SqlConnection(connString))
-            {
-                con.Open();
-                users = con.Query<User>("usp_GetAllUsers", commandType: CommandType.StoredProcedure).ToList();
-                con.Close();
-            }
-            return users;
+            connString = configuration.GetConnectionString("ApplicationConnection");
         }
-
-        public User GetUserById(int id, string connString)
-        {
-            User user = new();
-
-            using (SqlConnection con = new SqlConnection(connString))
-            {
-                string sqlQuery = "SELECT * FROM Users WHERE Id = @id";
-                var parameters = new { id = id};
-                con.Open();
-                user = con.QuerySingleOrDefault<User>(sqlQuery, parameters);
-                con.Close();
-            }
-            return user;
-        }
-
-        public List<User> GetUsersByLastName(string lname, string connString)
-        {
-            List<User> users = new List<User>();
-            using (SqlConnection con = new SqlConnection(connString))
-            {
-                var parameters = new { lname = lname };
-                con.Open();
-                users = con.Query<User>("usp_GetUsersByLastName",param: parameters, commandType: CommandType.StoredProcedure).ToList();
-                con.Close();
-            }
-            return users;
-        }
-        public void DeleteUser(int id, string connString)
+        public void DeleteUser(int id)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
@@ -56,8 +22,8 @@ namespace DAL
                     con.Open();
                     tran = con.BeginTransaction();
                     var parameters = new { id = id };
-                    con.Query("usp_DeleteUser", param: parameters, 
-                        commandType: CommandType.StoredProcedure,transaction:tran);
+                    con.Query("usp_DeleteUser", param: parameters,
+                        commandType: CommandType.StoredProcedure, transaction: tran);
                     tran.Commit();
                     con.Close();
                 }
@@ -69,7 +35,47 @@ namespace DAL
             }
         }
 
-        public void InsertUser(User user, string connString)
+        public List<User> GetAllUsers()
+        {
+            List<User> users = new List<User>();
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                con.Open();
+                users = con.Query<User>("usp_GetAllUsers", commandType: CommandType.StoredProcedure).ToList();
+                con.Close();
+            }
+            return users;
+        }
+
+        public User GetUserById(int id)
+        {
+            User user = new();
+
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                string sqlQuery = "SELECT * FROM Users WHERE Id = @id";
+                var parameters = new { id = id };
+                con.Open();
+                user = con.QuerySingleOrDefault<User>(sqlQuery, parameters);
+                con.Close();
+            }
+            return user;
+        }
+
+        public List<User> GetUsersByLastName(string lname)
+        {
+            List<User> users = new List<User>();
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                var parameters = new { lname = lname };
+                con.Open();
+                users = con.Query<User>("usp_GetUsersByLastName", param: parameters, commandType: CommandType.StoredProcedure).ToList();
+                con.Close();
+            }
+            return users;
+        }
+
+        public void InsertUser(User user)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
@@ -92,7 +98,7 @@ namespace DAL
             }
         }
 
-        public void UpdateUser(int id, User user, string connString)
+        public void UpdateUser(int id, User user)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
@@ -100,7 +106,7 @@ namespace DAL
                 try
                 {
                     con.Open();
-                    tran = con.BeginTransaction(); 
+                    tran = con.BeginTransaction();
                     var parameters = new { Id = id, FirstName = user.FirstName, LastName = user.LastName, Age = user.Age };
                     con.Query("usp_UpdateUser", param: parameters,
                         commandType: CommandType.StoredProcedure, transaction: tran);

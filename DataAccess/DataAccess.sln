@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetDataAccess", "DotNetDataAccess\DotNetDataAccess.csproj", "{81568665-F8E0-44B7-9438-ADAD0B9D2711}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.MongoDB.API", "DotNetCore.MongoDB.API\DotNetCore.MongoDB.API.csproj", "{B6F899D6-A0C5-470E-88D0-904FB29A82F3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{17561985-8224-40B7-AA41-4341C3EC70FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.AdoDotNet.API", "DotNetCore.AdoDotNet.API\DotNetCore.AdoDotNet.API.csproj", "{B8A2A490-5345-4648-97BE-42B6D51C1AAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCore.MongoDB.API", "DotNetCore.MongoDB.API\DotNetCore.MongoDB.API.csproj", "{B6F899D6-A0C5-470E-88D0-904FB29A82F3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCore.AdoDotNet.API", "DotNetCore.AdoDotNet.API\DotNetCore.AdoDotNet.API.csproj", "{B8A2A490-5345-4648-97BE-42B6D51C1AAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCore.Dapper.API", "DotNetCore.Dapper.API\DotNetCore.Dapper.API.csproj", "{76D3DD75-D970-4A6F-8ECB-FE01D42CC53C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{81568665-F8E0-44B7-9438-ADAD0B9D2711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81568665-F8E0-44B7-9438-ADAD0B9D2711}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81568665-F8E0-44B7-9438-ADAD0B9D2711}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81568665-F8E0-44B7-9438-ADAD0B9D2711}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17561985-8224-40B7-AA41-4341C3EC70FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17561985-8224-40B7-AA41-4341C3EC70FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17561985-8224-40B7-AA41-4341C3EC70FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17561985-8224-40B7-AA41-4341C3EC70FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B6F899D6-A0C5-470E-88D0-904FB29A82F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B6F899D6-A0C5-470E-88D0-904FB29A82F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6F899D6-A0C5-470E-88D0-904FB29A82F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +23,10 @@ Global
 		{B8A2A490-5345-4648-97BE-42B6D51C1AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8A2A490-5345-4648-97BE-42B6D51C1AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8A2A490-5345-4648-97BE-42B6D51C1AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76D3DD75-D970-4A6F-8ECB-FE01D42CC53C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76D3DD75-D970-4A6F-8ECB-FE01D42CC53C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76D3DD75-D970-4A6F-8ECB-FE01D42CC53C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76D3DD75-D970-4A6F-8ECB-FE01D42CC53C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

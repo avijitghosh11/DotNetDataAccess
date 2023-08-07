@@ -5,7 +5,7 @@ using System.Data;
 
 namespace DotNetCore.AdoDotNet.API.Services
 {
-    public class UserService: IUserService
+    public class UserService : IUserService
     {
         private readonly string connString;
         public UserService(IConfiguration configuration) {
