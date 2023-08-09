@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.MongoDB.API", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.AdoDotNet.API", "DotNetCore.AdoDotNet.API\DotNetCore.AdoDotNet.API.csproj", "{B8A2A490-5345-4648-97BE-42B6D51C1AAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCore.Dapper.API", "DotNetCore.Dapper.API\DotNetCore.Dapper.API.csproj", "{76D3DD75-D970-4A6F-8ECB-FE01D42CC53C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.Dapper.API", "DotNetCore.Dapper.API\DotNetCore.Dapper.API.csproj", "{76D3DD75-D970-4A6F-8ECB-FE01D42CC53C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCore.EntityFrameWork.API", "DotNetCore.EntityFrameWork.API\DotNetCore.EntityFrameWork.API.csproj", "{AD62649F-B1DA-4CB8-920E-D4176F3524FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.EntityFrameWork.API", "DotNetCore.EntityFrameWork.API\DotNetCore.EntityFrameWork.API.csproj", "{AD62649F-B1DA-4CB8-920E-D4176F3524FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCore.RedisDB.API", "DotNetCore.RedisDB.API\DotNetCore.RedisDB.API.csproj", "{47CE7E7B-5352-4E0F-8498-C9CC4CECC236}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{AD62649F-B1DA-4CB8-920E-D4176F3524FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD62649F-B1DA-4CB8-920E-D4176F3524FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD62649F-B1DA-4CB8-920E-D4176F3524FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47CE7E7B-5352-4E0F-8498-C9CC4CECC236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47CE7E7B-5352-4E0F-8498-C9CC4CECC236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47CE7E7B-5352-4E0F-8498-C9CC4CECC236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47CE7E7B-5352-4E0F-8498-C9CC4CECC236}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
