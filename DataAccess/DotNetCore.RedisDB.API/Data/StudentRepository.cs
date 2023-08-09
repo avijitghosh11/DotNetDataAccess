@@ -1,7 +1,5 @@
 ﻿using DotNetCore.RedisDB.API.Models;
 using StackExchange.Redis;
-using StackExchange.Redis.KeyspaceIsolation;
-using System.Data.Common;
 using System.Text.Json;
 
 namespace DotNetCore.RedisDB.API.Data
