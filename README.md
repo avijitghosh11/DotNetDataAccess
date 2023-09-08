@@ -1,6 +1,4 @@
-# DotNetDataAccess
-DotNetDataAccess is a solution where we can use different types of database (SQL and NoSql) and tool for CRUD operations.
+# .NET Core Multi-Database Application
+Welcome to our .NET Core multi-database application, a powerful solution that seamlessly integrates MS SQL Server, ADO.NET, Dapper, Entity Framework, MongoDB, and Redis databases. This project demonstrates the versatility of .NET Core by combining various data storage solutions. Key features include efficient data handling, Redis as a primary data base, and NoSQL capabilities with MongoDB. To get started, clone the repository and follow the setup instructions in the Usage section. Explore the Endpoints to understand the application's functionality across different databases. We welcome contributions; please review the contributing guidelines. 
 
-Currently we have Ado.Net and Dapper for MS SQL Server and MongoDb.Driver for Mongodb.
-
-This is an example that how we can use those databases into our C# application and what are the minimum requirements.
+Enjoy building with .NET Core!
