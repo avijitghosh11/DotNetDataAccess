@@ -1,29 +1,29 @@
-﻿using DotNetCore.AdoDotNet.API.Models;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System.Data;
+﻿using System.Data;
+using DotNetCore.AdoDotNet.API.Models;
+using Oracle.ManagedDataAccess.Client;
+
 
 namespace DotNetCore.AdoDotNet.API.Services
 {
-    public class UserService : IUserService
+    public class UserServiceOracle : IUserService
     {
         private readonly string connString;
-        public UserService(IConfiguration configuration) {
-            connString = configuration.GetConnectionString("ApplicationConnection");
+        public UserServiceOracle(IConfiguration configuration) {
+            connString = configuration.GetConnectionString("OracleConnection");
         }
         
         public List<User> GetAllUsers()
         {
             List<User> users = new List<User>();
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
                 con.Open();
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand("usp_GetAllUsers", con))
+                    using (OracleCommand cmd = new OracleCommand("usp_GetAllUsers", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        SqlDataReader rdr = cmd.ExecuteReader();
+                        OracleDataReader rdr = cmd.ExecuteReader();
 
                         while (rdr.Read())
                         {
@@ -37,13 +37,15 @@ namespace DotNetCore.AdoDotNet.API.Services
                         }
                     }
                 }
-                catch (Exception ex) { }
-                finally 
+                catch (Exception ex)
+                {
+
+                }
+                finally
                 {
                     if (con.State == ConnectionState.Open)
                         con.Close();
                 }
-
             }
             return users;
         }
@@ -52,16 +54,16 @@ namespace DotNetCore.AdoDotNet.API.Services
         {
             User user = new();
 
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
-                string sqlQuery = "SELECT * FROM Users WHERE Id = @id";
+                string sqlQuery = "SELECT * FROM Users WHERE Id = :Id";
                 con.Open();
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand(sqlQuery, con))
+                    using (OracleCommand cmd = new OracleCommand(sqlQuery, con))
                     {
-                        cmd.Parameters.AddWithValue("@Id", id);
-                        SqlDataReader rdr = cmd.ExecuteReader();
+                        cmd.Parameters.Add(new OracleParameter("Id", id));
+                        OracleDataReader rdr = cmd.ExecuteReader();
                         while (rdr.Read())
                         {
                             user.Id = Convert.ToInt32(rdr["Id"]);
@@ -71,7 +73,10 @@ namespace DotNetCore.AdoDotNet.API.Services
                         }
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex)
+                {
+
+                }
                 finally
                 {
                     if (con.State == ConnectionState.Open)
@@ -84,16 +89,16 @@ namespace DotNetCore.AdoDotNet.API.Services
         public List<User> GetUsersByLastName(string lname)
         {
             List<User> users = new List<User>();
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
                 con.Open();
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand("usp_GetUsersByLastName", con))
+                    using (OracleCommand cmd = new OracleCommand("usp_GetUsersByLastName", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@lname", lname);
-                        SqlDataReader rdr = cmd.ExecuteReader();
+                        cmd.Parameters.Add(new OracleParameter("lname", lname));
+                        OracleDataReader rdr = cmd.ExecuteReader();
 
                         while (rdr.Read())
                         {
@@ -107,7 +112,10 @@ namespace DotNetCore.AdoDotNet.API.Services
                         }
                     }
                 }
-                catch (Exception ex) { }
+                catch(Exception ex)
+                {
+
+                }
                 finally
                 {
                     if (con.State == ConnectionState.Open)
@@ -119,17 +127,18 @@ namespace DotNetCore.AdoDotNet.API.Services
         }
         public void DeleteUser(int id)
         {
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
-                SqlTransaction tran = null;
+                OracleTransaction tran = null;
                 try
                 {
                     con.Open();
                     tran = con.BeginTransaction();
-                    using (SqlCommand cmd = new SqlCommand("usp_DeleteUser", con, tran))
+                    using (OracleCommand cmd = new OracleCommand("usp_DeleteUser", con))
                     {
+                        cmd.Transaction = tran;
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@Id", id);
+                        cmd.Parameters.Add(new OracleParameter("User_Id", id));
                         cmd.ExecuteNonQuery();
                     }
                     tran.Commit();
@@ -143,25 +152,25 @@ namespace DotNetCore.AdoDotNet.API.Services
                     if (con.State == ConnectionState.Open)
                         con.Close();
                 }
-
             }
         }
 
         public void InsertUser(User user)
         {
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
-                SqlTransaction tran = null;
+                OracleTransaction tran = null;
                 try
                 {
                     con.Open();
                     tran = con.BeginTransaction();
-                    using (SqlCommand cmd = new SqlCommand("usp_InsertUser", con, tran))
+                    using (OracleCommand cmd = new OracleCommand("usp_InsertUser", con))
                     {
+                        cmd.Transaction = tran;
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-                        cmd.Parameters.AddWithValue("@LastName", user.LastName);
-                        cmd.Parameters.AddWithValue("@Age", user.Age);
+                        cmd.Parameters.Add(new OracleParameter("User_FirstName", user.FirstName));
+                        cmd.Parameters.Add(new OracleParameter("User_LastName", user.LastName));
+                        cmd.Parameters.Add(new OracleParameter("User_Age", user.Age));
                         cmd.ExecuteNonQuery();
                     }
                     tran.Commit();
@@ -175,29 +184,30 @@ namespace DotNetCore.AdoDotNet.API.Services
                     if (con.State == ConnectionState.Open)
                         con.Close();
                 }
-
             }
         }
 
         public void UpdateUser(int id, User user)
         {
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
-                SqlTransaction tran = null;
+                OracleTransaction tran = null;
                 try
                 {
                     con.Open();
                     tran = con.BeginTransaction();
-                    using (SqlCommand cmd = new SqlCommand("usp_UpdateUser", con, tran))
+                    using (OracleCommand cmd = new OracleCommand("usp_UpdateUser", con))
                     {
+                        cmd.Transaction = tran;
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@Id", id);
-                        cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-                        cmd.Parameters.AddWithValue("@LastName", user.LastName);
-                        cmd.Parameters.AddWithValue("@Age", user.Age);
+                        cmd.Parameters.Add(new OracleParameter("User_Id", id));
+                        cmd.Parameters.Add(new OracleParameter("User_FirstName", user.FirstName));
+                        cmd.Parameters.Add(new OracleParameter("User_LastName", user.LastName));
+                        cmd.Parameters.Add(new OracleParameter("User_Age", user.Age));
                         cmd.ExecuteNonQuery();
                     }
                     tran.Commit();
+                    
                 }
                 catch (Exception ex)
                 {
@@ -205,10 +215,9 @@ namespace DotNetCore.AdoDotNet.API.Services
                 }
                 finally
                 {
-                    if(con.State==ConnectionState.Open)
+                    if (con.State == ConnectionState.Open)
                         con.Close();
                 }
-
             }
         }
     }
