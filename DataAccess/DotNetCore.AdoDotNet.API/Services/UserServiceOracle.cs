@@ -97,7 +97,7 @@ namespace DotNetCore.AdoDotNet.API.Services
                     using (OracleCommand cmd = new OracleCommand("usp_GetUsersByLastName", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add(new OracleParameter("lname", lname));
+                        cmd.Parameters.Add(new OracleParameter("User_LastName", lname));
                         OracleDataReader rdr = cmd.ExecuteReader();
 
                         while (rdr.Read())

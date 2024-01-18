@@ -1,27 +1,27 @@
 ﻿using DotNetCore.Dapper.API.Models;
 using System.Data;
-using Microsoft.Data.SqlClient;
 using Dapper;
+using Oracle.ManagedDataAccess.Client;
 
 namespace DotNetCore.Dapper.API.Services
 {
-    public class UserService : IUserService
+    public class UserServiceOracle : IUserService
     {
         private readonly string connString;
-        public UserService(IConfiguration configuration)
+        public UserServiceOracle(IConfiguration configuration)
         {
-            connString = configuration.GetConnectionString("ApplicationConnection");
+            connString = configuration.GetConnectionString("OracleConnection");
         }
         public void DeleteUser(int id)
         {
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
-                SqlTransaction tran = null;
+                OracleTransaction tran = null;
                 try
                 {
                     con.Open();
                     tran = con.BeginTransaction();
-                    var parameters = new { id = id };
+                    var parameters = new { User_id = id };
                     con.Query("usp_DeleteUser", param: parameters,
                         commandType: CommandType.StoredProcedure, transaction: tran);
                     tran.Commit();
@@ -41,7 +41,7 @@ namespace DotNetCore.Dapper.API.Services
         public List<User> GetAllUsers()
         {
             List<User> users = new List<User>();
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
                 con.Open();
                 try
@@ -62,9 +62,9 @@ namespace DotNetCore.Dapper.API.Services
         {
             User user = new();
 
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
-                string sqlQuery = "SELECT * FROM Users WHERE Id = @id";
+                string sqlQuery = "SELECT * FROM Users WHERE Id = :id";
                 var parameters = new { id = id };
                 con.Open();
                 try
@@ -81,18 +81,19 @@ namespace DotNetCore.Dapper.API.Services
             return user;
         }
 
-        public List<User> GetUsersByLastName(string lname)
+        public List<User> GetUsersByLastName(string lastname)
         {
             List<User> users = new List<User>();
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
-                var parameters = new { lname = lname };
+                var parameters = new { User_LastName = lastname };
                 con.Open();
                 try
                 {
-                    users = con.Query<User>("usp_GetUsersByLastName", param: parameters, commandType: CommandType.StoredProcedure).ToList();
+                    users = con.Query<User>("usp_GetUsersByLastName", 
+                        param: parameters, commandType: CommandType.StoredProcedure).ToList();
                 }
-                catch { }
+                catch (Exception ex){ }
                 finally
                 {
                     if (con.State == ConnectionState.Open)
@@ -104,14 +105,15 @@ namespace DotNetCore.Dapper.API.Services
 
         public void InsertUser(User user)
         {
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
-                SqlTransaction tran = null;
+                OracleTransaction tran = null;
                 try
                 {
                     con.Open();
                     tran = con.BeginTransaction();
-                    var parameters = new { FirstName = user.FirstName, LastName = user.LastName, Age = user.Age };
+                    var parameters = new { User_FirstName = user.FirstName, 
+                        User_LastName = user.LastName, User_Age = user.Age };
                     con.Query("usp_InsertUser", param: parameters,
                         commandType: CommandType.StoredProcedure, transaction: tran);
                     tran.Commit();
@@ -130,14 +132,15 @@ namespace DotNetCore.Dapper.API.Services
 
         public void UpdateUser(int id, User user)
         {
-            using (SqlConnection con = new SqlConnection(connString))
+            using (OracleConnection con = new OracleConnection(connString))
             {
-                SqlTransaction tran = null;
+                OracleTransaction tran = null;
                 try
                 {
                     con.Open();
                     tran = con.BeginTransaction();
-                    var parameters = new { Id = id, FirstName = user.FirstName, LastName = user.LastName, Age = user.Age };
+                    var parameters = new { User_Id = id, User_FirstName = user.FirstName, 
+                        User_LastName = user.LastName, User_Age = user.Age };
                     con.Query("usp_UpdateUser", param: parameters,
                         commandType: CommandType.StoredProcedure, transaction: tran);
                     tran.Commit();
