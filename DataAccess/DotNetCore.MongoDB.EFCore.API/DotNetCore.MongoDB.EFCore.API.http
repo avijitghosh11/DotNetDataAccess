@@ -1,0 +1,6 @@
+@DotNetCore.MongoDB.EFCore.API_HostAddress = http://localhost:5147
+
+GET {{DotNetCore.MongoDB.EFCore.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
